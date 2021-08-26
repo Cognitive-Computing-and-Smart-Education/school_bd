@@ -21,7 +21,7 @@ class User(models.Model):
     name = models.CharField(max_length=16, unique=True, default='')
     password = models.CharField(max_length=16, unique=True, default='')
     sex = models.CharField(max_length=32, choices=gender, default='男')
-    users = models.ForeignKey(Group, default='', validators='用户组')
+    users = models.ForeignKey(Group, default='', verbose_name='用户组', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.name

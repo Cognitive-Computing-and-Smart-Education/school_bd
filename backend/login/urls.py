@@ -18,6 +18,7 @@ from django.urls import path, include
 from login.views import *
 
 urlpatterns = [
-    path('', ),
+    path('', index),
+    path('detail/', datail)
 
 ]
