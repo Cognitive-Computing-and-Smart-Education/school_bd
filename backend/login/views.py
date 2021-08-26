@@ -3,16 +3,14 @@ from login.models import *
 
 
 def index(request):
-    return render(request, 'index.html')
+    if request.method == "GET":
+        return render(request, 'index.html')
 
-
-# Create your views here.
-def datail(request):
     if request.method == "POST":
 
         username = request.POST.get('username', None)
         password = request.POST.get("passwd", None)
-        print(username,password)
+        print(username, password)
         message = "所有字段都必须填写"
         if username and password:
             username = username.strip()

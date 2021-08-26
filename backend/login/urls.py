@@ -19,6 +19,6 @@ from login.views import *
 
 urlpatterns = [
     path('', index),
-    path('detail/', datail)
+
 
 ]
