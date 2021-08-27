@@ -25,3 +25,8 @@ def index(request):
                 return render(request, "index.html", {'error': "账号不存在!"})
         else:
             return render(request, "index.html", {'error': "账号密码不能为空!"})
+
+
+def all_user(request):
+    users = LoginUser.objects.all()
+    pass
