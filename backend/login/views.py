@@ -16,7 +16,7 @@ def index(request):
             username = username.strip()
 
             try:
-                user = User.objects.get(name=username)
+                user = LoginUser.objects.get(name=username)
                 if user.password == password:
                     return render(request, 'detail.html')
                 else:

@@ -80,8 +80,10 @@ class AuthUserUserPermissions(models.Model):
 class ClassActivity(models.Model):
     activityid = models.IntegerField(db_column='ActivityId', primary_key=True)  # Field name made lowercase.
     classid = models.IntegerField(db_column='ClassId', blank=True, null=True)  # Field name made lowercase.
-    activityname = models.CharField(db_column='ActivityName', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    activitytype = models.CharField(db_column='ActivityType', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    activityname = models.CharField(db_column='ActivityName', max_length=255, blank=True,
+                                    null=True)  # Field name made lowercase.
+    activitytype = models.CharField(db_column='ActivityType', max_length=255, blank=True,
+                                    null=True)  # Field name made lowercase.
     activitytime = models.DateTimeField(db_column='ActivityTime', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
@@ -134,9 +136,25 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
+class InternetRecord(models.Model):
+    internetid = models.IntegerField(db_column='InternetId', primary_key=True)  # Field name made lowercase.
+    studentid = models.IntegerField(db_column='StudentId', blank=True, null=True)  # Field name made lowercase.
+    starttime = models.DateTimeField(db_column='StartTime', blank=True, null=True)  # Field name made lowercase.
+    overtime = models.DateTimeField(db_column='OverTime', blank=True, null=True)  # Field name made lowercase.
+    duration = models.CharField(db_column='Duration', max_length=255, blank=True,
+                                null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'internet_record'
+
+
 class LoginGroup(models.Model):
     id = models.BigAutoField(primary_key=True)
     groupname = models.CharField(unique=True, max_length=20)
+
+    def __str__(self):
+        return self.groupname
 
     class Meta:
         managed = False
@@ -155,34 +173,78 @@ class LoginUser(models.Model):
         db_table = 'login_user'
 
 
+class StudentConsumption(models.Model):
+    consumptionid = models.IntegerField(db_column='ConsumptionId', primary_key=True)  # Field name made lowercase.
+    studentid = models.IntegerField(db_column='StudentId', blank=True, null=True)  # Field name made lowercase.
+    amount = models.FloatField(db_column='Amount')  # Field name made lowercase.
+    type = models.IntegerField(db_column='Type', blank=True, null=True)  # Field name made lowercase.
+    time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'student_consumption'
+
+
+class StudentDormitory(models.Model):
+    dormitoryid = models.IntegerField(db_column='DormitoryId', primary_key=True)  # Field name made lowercase.
+    studentid = models.IntegerField(db_column='StudentId', blank=True, null=True)  # Field name made lowercase.
+    entertime = models.DateTimeField(db_column='EnterTime', blank=True, null=True)  # Field name made lowercase.
+    leavetime = models.DateTimeField(db_column='LeaveTime', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'student_dormitory'
+
+
 class StudentInfo(models.Model):
     sudentid = models.BigIntegerField(db_column='SudentID', primary_key=True)  # Field name made lowercase.
-    stufentname = models.CharField(db_column='StufentName', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    stufentname = models.CharField(db_column='StufentName', max_length=255, blank=True,
+                                   null=True)  # Field name made lowercase.
     sex = models.CharField(db_column='Sex', max_length=255, blank=True, null=True)  # Field name made lowercase.
     grade = models.CharField(db_column='Grade', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    class_field = models.CharField(db_column='Class', max_length=255, blank=True, null=True)  # Field name made lowercase. Field renamed because it was a Python reserved word.
+    class_field = models.CharField(db_column='Class', max_length=255, blank=True,
+                                   null=True)  # Field name made lowercase. Field renamed because it was a Python reserved word.
     admissiondate = models.DateField(db_column='AdmissionDate', blank=True, null=True)  # Field name made lowercase.
     graduationdate = models.DateField(db_column='GraduationDate', blank=True, null=True)  # Field name made lowercase.
-    studentnumber = models.BigIntegerField(db_column='StudentNumber', blank=True, null=True)  # Field name made lowercase.
+    studentnumber = models.BigIntegerField(db_column='StudentNumber', blank=True,
+                                           null=True)  # Field name made lowercase.
     homeaddress = models.TextField(db_column='HomeAddress', blank=True, null=True)  # Field name made lowercase.
     native = models.CharField(db_column='Native', max_length=255, blank=True, null=True)  # Field name made lowercase.
     birth = models.DateField(db_column='Birth', blank=True, null=True)  # Field name made lowercase.
     nation = models.CharField(db_column='Nation', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    politicallandscape = models.CharField(db_column='PoliticalLandscape', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    politicallandscape = models.CharField(db_column='PoliticalLandscape', max_length=255, blank=True,
+                                          null=True)  # Field name made lowercase.
     idnumber = models.BigIntegerField(db_column='IdNumber', blank=True, null=True)  # Field name made lowercase.
     phone = models.BigIntegerField(db_column='Phone', blank=True, null=True)  # Field name made lowercase.
-    familyfinances = models.CharField(db_column='FamilyFinances', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    familyfinances = models.CharField(db_column='FamilyFinances', max_length=255, blank=True,
+                                      null=True)  # Field name made lowercase.
     isonlychild = models.IntegerField(db_column='isOnlyChild', blank=True, null=True)  # Field name made lowercase.
     isorphan = models.IntegerField(db_column='isOrphan', blank=True, null=True)  # Field name made lowercase.
-    ispreferential = models.IntegerField(db_column='isPreferential', blank=True, null=True)  # Field name made lowercase.
+    ispreferential = models.IntegerField(db_column='isPreferential', blank=True,
+                                         null=True)  # Field name made lowercase.
     type = models.CharField(db_column='Type', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    birthplace = models.CharField(db_column='Birthplace', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    healthstatus = models.CharField(db_column='HealthStatus', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    graduatedschool = models.CharField(db_column='GraduatedSchool', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    birthplace = models.CharField(db_column='Birthplace', max_length=255, blank=True,
+                                  null=True)  # Field name made lowercase.
+    healthstatus = models.CharField(db_column='HealthStatus', max_length=255, blank=True,
+                                    null=True)  # Field name made lowercase.
+    graduatedschool = models.CharField(db_column='GraduatedSchool', max_length=255, blank=True,
+                                       null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'student_info'
+
+
+class StudentRp(models.Model):
+    rpid = models.IntegerField(db_column='RPId', primary_key=True)  # Field name made lowercase.
+    studentid = models.IntegerField(db_column='StudentId', blank=True, null=True)  # Field name made lowercase.
+    time = models.DateField(blank=True, null=True)
+    content = models.CharField(db_column='Content', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    type = models.IntegerField(db_column='Type', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'student_rp'
 
 
 class SudentScore(models.Model):
@@ -195,3 +257,23 @@ class SudentScore(models.Model):
     class Meta:
         managed = False
         db_table = 'sudent_score'
+
+
+class TeacherInfo(models.Model):
+    teacherid = models.IntegerField(db_column='TeacherId', primary_key=True)  # Field name made lowercase.
+    teachername = models.CharField(db_column='TeacherName', max_length=255, blank=True,
+                                   null=True)  # Field name made lowercase.
+    age = models.IntegerField(db_column='Age', blank=True, null=True)  # Field name made lowercase.
+    sex = models.CharField(db_column='Sex', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    education = models.CharField(db_column='Education', max_length=255)  # Field name made lowercase.
+    designation = models.CharField(db_column='Designation', max_length=255, blank=True,
+                                   null=True)  # Field name made lowercase.
+    subject = models.CharField(db_column='Subject', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    famousrate = models.FloatField(db_column='FamousRate', blank=True, null=True)  # Field name made lowercase.
+    firstbatchrate = models.FloatField(db_column='FirstBatchRate', blank=True, null=True)  # Field name made lowercase.
+    undergraduaterate = models.FloatField(db_column='UndergraduateRate', blank=True,
+                                          null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'teacher_info'
