@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import AMap from 'AMap' // 引入高德地图
 import './assets/style/index.css'
+import './assets/font/iconfont.css'
 Vue.use(AMap); //设置elementUI。
 require('./mock/index')
 

@@ -1,15 +1,17 @@
 import index from "@/views/layout/index"
-import article from '@/views/article/index'
+import login from '@/views/login/index'
 
-export default [{
-    path: '/',
-    component: index,
-    children:[
-        ]
-},
+export default [
     {
-        path: '/article',
-        name: 'article',
-        component: article
-    }
+        path: '/login',
+        name: 'login',
+        component: login
+    },
+    {
+        path: '/',
+        component: index,
+        children:[
+            ]
+    },
+
 ]

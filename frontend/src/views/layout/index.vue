@@ -1,7 +1,7 @@
 <template>
     <el-container style="height: 100%">
         <el-header height="80px">
-            <current-head :name="'教育舆情监控系统'" :currentTime="currentTime"></current-head>
+            <current-head :name="'学校大数据教育平台'" :currentTime="currentTime"></current-head>
         </el-header>
         <el-main>
             <container-left class="container-left"></container-left>

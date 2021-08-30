@@ -1,35 +1,20 @@
 <template>
-    <el-container style="height: 100%">
-        <el-header height="80px">
-            <current-head :name="'教育文章详情'" :currentTime="currentTime"></current-head>
-        </el-header>
-        <el-main>
-            <div class="map-box">
-                <div id="container" style="width:100%; height:100%"></div>
-            </div>
-            <!--            <el-amap class="amap-box" :vid="'amap-vue'" style="width:500px; height:300px"></el-amap>-->
-        </el-main>
-    </el-container>
+    <div style="width: 100%;height: 100%">
+        <div id="container" style="width:100%; height:100%"></div>
+    </div>
 </template>
 
 <script>
-    import CurrentHead from '@/components/current-head'
-    import '../../../node_modules/echarts/map/js/china.js'
-    import 'echarts/extension/bmap/bmap.js'
     import { loadBMap } from '@/lib/map'
+    import 'echarts/map/js/china.js'
+    import 'echarts/extension/bmap/bmap.js'
 
     export default {
-        name: "index",
-        components: {
-            CurrentHead
-        },
+        name: "center-map",
         data() {
             return {
-                currentTime: ''
+
             };
-        },
-        created() {
-            this.getNowTime()
         },
         mounted() {
             this.$nextTick(() => {
@@ -39,20 +24,6 @@
             })
         },
         methods: {
-            timestampToTime(data) {
-                let yyyy = data.getFullYear()
-                let MM = (data.getMonth() + 1).toString().padStart(2, '0')
-                let dd = data.getDate().toString().padStart(2, '0')
-                let h = data.getHours().toString().padStart(2, '0')
-                let m = data.getMinutes().toString().padStart(2, '0')
-                let s = data.getSeconds().toString().padStart(2, '0')
-                return yyyy + '年' + MM + '月' + dd + '日 ' + h + ':' + m + ':' + s
-            },
-            getNowTime() {
-                let aData = new Date();
-
-                this.currentTime = this.timestampToTime(aData)
-            },
             getData(point) {
                 let A = point[0],
                     B = point[1],
@@ -95,7 +66,7 @@
             getMapData() {
                 // let hStep = 300 / (data.length - 1);
                 let busLines = [{
-                    coords: this.getData([[116.4383, 40.1471], [120.5383, 23.1471]]),
+                    coords: this.getData([[102.732271,25.04593], [102.84326,24.891176]]),
                     lineStyle: {
                         normal: {
                             color: this.$echarts.color.modifyHSL('#5A94DF', Math.round(350))
@@ -103,7 +74,7 @@
                     }
                 },
                     {
-                        coords: this.getData([[116.4383, 40.1471], [114.5383, 25.1471]]),
+                        coords: this.getData([[102.843947,24.987063], [102.84326,24.891176]]),
                         lineStyle: {
                             normal: {
                                 color: this.$echarts.color.modifyHSL('#5A94DF', Math.round(160))
@@ -111,7 +82,7 @@
                         }
                     },
                     {
-                        coords: this.getData([[116.4383, 40.1471], [118.5383, 33.1471]]),
+                        coords: this.getData([[102.708447,25.048228], [102.84326,24.891176]]),
                         lineStyle: {
                             normal: {
                                 color: this.$echarts.color.modifyHSL('#5A94DF', Math.round(140))
@@ -119,7 +90,7 @@
                         }
                     },
                     {
-                        coords: this.getData([[116.4383, 40.1471], [123.5383, 28.1471]]),
+                        coords: this.getData([[102.707492,25.006726], [102.84326,24.891176]]),
                         lineStyle: {
                             normal: {
                                 color: this.$echarts.color.modifyHSL('#5A94DF', Math.round(250))
@@ -319,230 +290,10 @@
                     }]
                 });
             },
-
-    /*$.get('data/asset/data/lines-bus.json', function(data) {
-        var hStep = 300 / (data.length - 1);
-        var busLines = [{
-            coords: getData([[116.4383, 40.1471], [120.5383, 23.1471]]),
-            lineStyle: {
-                normal: {
-                    color: echarts.color.modifyHSL('#5A94DF', Math.round(350))
-                }
-            }
-        },
-            {
-                coords: getData([[116.4383, 40.1471], [114.5383, 25.1471]]),
-                lineStyle: {
-                    normal: {
-                        color: echarts.color.modifyHSL('#5A94DF', Math.round(160))
-                    }
-                }
-            },
-            {
-                coords: getData([[116.4383, 40.1471], [118.5383, 33.1471]]),
-                lineStyle: {
-                    normal: {
-                        color: echarts.color.modifyHSL('#5A94DF', Math.round(140))
-                    }
-                }
-            },
-            {
-                coords: getData([[116.4383, 40.1471], [123.5383, 28.1471]]),
-                lineStyle: {
-                    normal: {
-                        color: echarts.color.modifyHSL('#5A94DF', Math.round(250))
-                    }
-                }
-            }];
-        myChart.setOption(option = {
-            bmap: {
-                center: [116.46, 29.92],
-                zoom: 6,
-                roam: true,
-                mapStyle: {
-                    'styleJson': [
-                        {
-                            'featureType': 'water',
-                            'elementType': 'all',
-                            'stylers': {
-                                'color': '#031628'
-                            }
-                        },
-                        {
-                            'featureType': 'land',
-                            'elementType': 'geometry',
-                            'stylers': {
-                                'color': '#000102'
-                            }
-                        },
-                        {
-                            'featureType': 'highway',
-                            'elementType': 'all',
-                            'stylers': {
-                                'visibility': 'off'
-                            }
-                        },
-                        {
-                            'featureType': 'arterial',
-                            'elementType': 'geometry.fill',
-                            'stylers': {
-                                'color': '#000000'
-                            }
-                        },
-                        {
-                            'featureType': 'arterial',
-                            'elementType': 'geometry.stroke',
-                            'stylers': {
-                                'color': '#0b3d51'
-                            }
-                        },
-                        {
-                            'featureType': 'local',
-                            'elementType': 'geometry',
-                            'stylers': {
-                                'color': '#000000'
-                            }
-                        },
-                        {
-                            'featureType': 'railway',
-                            'elementType': 'geometry.fill',
-                            'stylers': {
-                                'color': '#000000'
-                            }
-                        },
-                        {
-                            'featureType': 'railway',
-                            'elementType': 'geometry.stroke',
-                            'stylers': {
-                                'color': '#08304b'
-                            }
-                        },
-                        {
-                            'featureType': 'subway',
-                            'elementType': 'geometry',
-                            'stylers': {
-                                'lightness': -70
-                            }
-                        },
-                        {
-                            'featureType': 'building',
-                            'elementType': 'geometry.fill',
-                            'stylers': {
-                                'color': '#000000'
-                            }
-                        },
-                        {
-                            'featureType': 'all',
-                            'elementType': 'labels.text.fill',
-                            'stylers': {
-                                'color': '#857f7f'
-                            }
-                        },
-                        {
-                            'featureType': 'all',
-                            'elementType': 'labels.text.stroke',
-                            'stylers': {
-                                'color': '#000000'
-                            }
-                        },
-                        {
-                            'featureType': 'building',
-                            'elementType': 'geometry',
-                            'stylers': {
-                                'color': '#022338'
-                            }
-                        },
-                        {
-                            'featureType': 'green',
-                            'elementType': 'geometry',
-                            'stylers': {
-                                'color': '#062032'
-                            }
-                        },
-                        {
-                            'featureType': 'boundary',
-                            'elementType': 'all',
-                            'stylers': {
-                                'color': '#465b6c'
-                            }
-                        },
-                        {
-                            'featureType': 'manmade',
-                            'elementType': 'all',
-                            'stylers': {
-                                'color': '#022338'
-                            }
-                        },
-                        {
-                            'featureType': 'label',
-                            'elementType': 'all',
-                            'stylers': {
-                                'visibility': 'off'
-                            }
-                        }
-                    ]
-                }
-            },
-            series: [{
-                type: 'lines',
-                coordinateSystem: 'bmap',
-                polyline: true,
-                data: busLines,
-                silent: true,
-                lineStyle: {
-                    normal: {
-                        // color: '#c23531',
-                        // color: 'rgb(200, 35, 45)',
-                        opacity: 0.3,
-
-                        width: 2
-                    }
-                },
-                progressiveThreshold: 500,
-                progressive: 200
-            }, {
-                type: 'lines',
-                coordinateSystem: 'bmap',
-                polyline: true,
-                data: busLines,
-                lineStyle: {
-                    normal: {
-                        width: 0
-                    }
-                },
-                effect: {
-                    constantSpeed: 50,
-                    show: true,
-                    trailLength: 0.5,
-                    symbolSize: 2
-                },
-                zlevel: 1
-            }]
-        });
-    });*/
         }
     }
 </script>
 
 <style scoped>
-    /deep/ .el-header, .el-footer {
-        text-align: center;
-        padding: 0;
-    }
 
-    /deep/ .el-main {
-        background-color: #0e0f3c;
-        color: #333;
-        text-align: center;
-        height: calc(100% - 120px);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .map-box{
-        width: 600px;
-        height: 600px;
-        padding: 10px;
-        border: 1px solid #1e2252;
-    }
 </style>
