@@ -5,3 +5,4 @@ from login import models
 
 # admin.site.register(models.LoginUser)
 # admin.site.register(models.LoginGroup)
+admin.site.register(models.User)
