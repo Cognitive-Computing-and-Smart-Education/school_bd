@@ -5,7 +5,7 @@
         </div>
         <div class="industry-voice-box">
             <div class="courseOverview">
-                <div class="current-title">
+                <div class="current-title finger" @click="goDetail">
                     课程概况
                 </div>
                 <div class="current-content">
@@ -151,9 +151,14 @@
         methods: {
             ...mapMutations(["changeHomeAreaName"]),
             // async
-            init () {
+            init() {
 
             },
+            goDetail() {
+                this.$router.push({
+                    path: '/detailsHome/schoolProfile',
+                })
+            }
         }
     }
 </script>

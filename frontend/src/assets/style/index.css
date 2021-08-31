@@ -31,3 +31,50 @@
 .finger{
     cursor: pointer;
 }
+.el-header{
+    position: relative;
+    z-index: 9999;
+}
+
+.current-main-box{
+    width: 100%;
+    height: 100%;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+.clearfix:after {
+    clear: both
+}
+
+.current-card-box .el-card__header{
+    padding: 10px 20px;
+    background-color: #dfe8f1;
+}
+
+.current-card-box{
+    box-shadow: 0 1px 8px #888888;
+}
+
+.current-half-box{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.current-half-box .el-card{
+    width: 49%;
+}
+
+.current-half-height{
+    width: 100%;
+    height: 410px;
+}
+
+.marginTop20{
+    margin-top: 30px;
+}

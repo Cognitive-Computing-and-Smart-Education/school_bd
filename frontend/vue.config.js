@@ -31,7 +31,7 @@ module.exports = {
         }
     },
     lintOnSave: false,
-    publicPath: './',
+    publicPath: '/',
     chainWebpack: config => {
         config.resolve.alias
             .set('@', resolve('src'))
