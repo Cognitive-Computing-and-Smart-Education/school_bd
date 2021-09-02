@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import home from './modules/home'
 import routerData from './modules/routerData'
+import classData from './modules/classData'
 
 
 
@@ -20,7 +21,8 @@ export default new Vuex.Store({
     },
     modules: {
         home,
-        routerData
+        routerData,
+        classData
     },
     actions: {
 

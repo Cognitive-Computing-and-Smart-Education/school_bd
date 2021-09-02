@@ -3,12 +3,12 @@
         <div class="aside-logo"><img src="../../../assets/img/logo4.png"></div>
         <el-menu
                 :unique-opened="true"
-                router
+                :router="true"
                 background-color="#545c64"
                 text-color="#fff"
                 active-text-color="#fff"
                 @select="handleSelect"
-                :default-active="'/schoolProfile'"
+                :default-active="activeAside"
                 class="el-menu-vertical-demo aside-tree"
                 :class="{'aside-tree-sm':isCollapse}"
                 ref="asideMenu"
@@ -69,6 +69,7 @@
         props: ['isCollapse'],
         created() {
             this.routerList = homeManage
+            console.log(this.routerList)
         },
         computed: {
             ...mapGetters(["routerPath"]),
@@ -77,14 +78,19 @@
             routerPath() {
                 // this.getNowTime();
                 // console.log(this.routerPath)
-                this.activeAside = this.routerPath[0]
+                this.activeAside = this.routerPath
             }
         },
         methods: {
             ...mapMutations(["changeRouterPath"]),
-            handleSelect(key, keyPath) {
+            handleSelect(index, indexPath) {
                 let _that = this
-                _that.changeRouterPath(keyPath);
+                _that.changeRouterPath(index);
+                // this.$nextTick(() => {
+                //     this.$router.push({
+                //         path: index,
+                //     })
+                // })
             }
         }
     }

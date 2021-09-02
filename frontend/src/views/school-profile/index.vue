@@ -131,7 +131,7 @@
                         type: 'value',
                         splitLine: {
                             lineStyle: {
-                                color: '#142852'
+                                color: '#eee'
                             }
                         },
                         axisLabel: {

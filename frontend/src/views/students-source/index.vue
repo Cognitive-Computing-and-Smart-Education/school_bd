@@ -2,7 +2,7 @@
     <div class="current-main-box">
         <el-form :inline="true" :model="searchFrom" class="demo-form-inline">
             <el-form-item label="学年">
-                <el-select v-model="searchFrom.schoolYear" placeholder="活动区域">
+                <el-select v-model="searchFrom.schoolYear" placeholder="活动学年">
                     <el-option label="全部" value=""></el-option>
                     <el-option label="2021学年" value="shanghai"></el-option>
                     <el-option label="2022学年" value="beijing"></el-option>

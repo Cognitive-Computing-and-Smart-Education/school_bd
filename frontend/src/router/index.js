@@ -11,8 +11,20 @@ router.prototype.push = function push(location) {
 
 vue.use(router)
 
-export default new router({
+
+
+const Router = new router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
 })
+
+/*export default new router({
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
+})*/
+
+export default Router;
+
+

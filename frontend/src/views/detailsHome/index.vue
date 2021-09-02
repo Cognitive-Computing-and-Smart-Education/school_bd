@@ -8,7 +8,7 @@
                 <home-head></home-head>
             </el-header>
             <el-main class="home-main">
-               <router-view></router-view>
+               <router-view  v-if="isRouterAlive"></router-view>
             </el-main>
         </el-container>
     </el-container>
@@ -20,9 +20,14 @@
 
     export default {
         name: "index",
+        provide(){
+            return{
+                reload:this.reload
+            }
+        },
         data() {
             return {
-
+                isRouterAlive: true
             }
         },
         components: {
@@ -32,6 +37,12 @@
         methods: {
             ceshi() {
                // console.log(homeManage)
+            },
+            reload(){
+                this.isRouterAlive = false
+                this.$nextTick(function () {
+                    this.isRouterAlive = true
+                })
             }
         }
     }
