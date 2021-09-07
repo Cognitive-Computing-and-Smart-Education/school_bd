@@ -2,12 +2,12 @@
     <div>
         <el-card class="school-overview-card current-card-box" shadow="always">
             <div slot="header" class="clearfix current-card-head">
-                <span>年级在校人数</span>
+                <span>师资概况</span>
             </div>
             <div class="">
-                <el-form :inline="true" :model="form" class="demo-form-inline">
+                <el-form :inline="true" :model="teachersForm" class="demo-form-inline">
                     <el-form-item>
-                        <el-select v-model="form.grade" placeholder="请选择年级">
+                        <el-select v-model="teachersForm.grade" placeholder="请选择年级">
                             <el-option
                                     label="全校"
                                     value="">
@@ -21,22 +21,36 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="coursesNumSubmit">查询</el-button>
+                        <el-select v-model="teachersForm.class" placeholder="请选择班级">
+                            <el-option
+                                    label="全部班级"
+                                    value="">
+                            </el-option>
+                            <el-option
+                                    v-for="item in teachersFormClassOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="teachersSubmit">查询</el-button>
                     </el-form-item>
                 </el-form>
                 <div class="grade-num-box">
-                    <div id="coursesNumCharts"></div>
-                    <div id="curriculumChangeCharts"></div>
+                    <div id="teachersChart"></div>
+                    <div id="teachersChangeChart"></div>
                 </div>
             </div>
         </el-card>
         <el-card class="school-overview-card current-card-box" shadow="always">
             <div slot="header" class="clearfix current-card-head">
-                <span>各课程详细数据</span>
+                <span>教师基本信息表</span>
             </div>
             <div class="">
                 <el-form :inline="true" :model="tableForm" class="demo-form-inline">
-                    <el-form-item label="年级">
+                    <el-form-item>
                         <el-select v-model="tableForm.grade" placeholder="请选择年级">
                             <el-option
                                     label="全校"
@@ -50,39 +64,25 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="班级">
-                        <el-select v-model="tableForm.className" placeholder="请选择班级">
+                    <el-form-item>
+                        <el-select v-model="tableForm.class" placeholder="请选择班级">
                             <el-option
-                                    label="全部"
+                                    label="全部班级"
                                     value="">
                             </el-option>
                             <el-option
-                                    v-for="item in classNameOptions"
+                                    v-for="item in teachersFormClassOptions"
                                     :key="item.value"
                                     :label="item.label"
                                     :value="item.value">
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="课程类型">
-                        <el-select v-model="tableForm.courseType" placeholder="请选择课程类型">
-                            <el-option
-                                    label="全校"
-                                    value="">
-                            </el-option>
-                            <el-option
-                                    v-for="item in courseTypeOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="课程名称">
-                        <el-input v-model="tableForm.courseName" placeholder="请填写课程名称"></el-input>
+                    <el-form-item label="教师名称">
+                        <el-input v-model="tableForm.teacherName" placeholder="请填写教师名称"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">查询</el-button>
+                        <el-button type="primary" @click="tableSubmit">查询</el-button>
                     </el-form-item>
                 </el-form>
                 <el-table
@@ -96,39 +96,39 @@
                             width="50">
                     </el-table-column>
                     <el-table-column
-                            prop="curriculumName"
+                            prop="teacherName"
                             align="center"
-                            label="课程名称"
+                            label="教师名称"
                             min-width="180">
                     </el-table-column>
                     <el-table-column
-                            prop="curriculumNo"
+                            prop="teacherGender"
                             align="center"
-                            label="课程编码"
+                            label="教师性别"
                             min-width="100">
                     </el-table-column>
                     <el-table-column
-                            prop="courseType"
+                            prop="teacherAge"
                             align="center"
-                            label="课程类型"
+                            label="教师年龄"
                             min-width="100">
                     </el-table-column>
                     <el-table-column
-                            prop="totalClassHours"
+                            prop="teachingCourses"
                             align="center"
-                            label="总学时"
+                            label="教授课程"
                             min-width="100">
                     </el-table-column>
                     <el-table-column
-                            prop="grade"
+                            prop="education"
                             align="center"
-                            label="年级"
+                            label="学历"
                             min-width="100">
                     </el-table-column>
                     <el-table-column
-                            prop="className"
+                            prop="technicalTitle"
                             align="center"
-                            label="班级"
+                            label="职称"
                             min-width="100">
                     </el-table-column>
                     <el-table-column
@@ -162,22 +162,28 @@
         name: "index",
         data() {
             return {
-                form: {
-                    grade: ''
+                teachersForm: {
+                    grade: '',
+                    class: ''
+                },
+                tableForm: {
+                    grade: '',
+                    class: '',
+                    teacherName: ''
                 },
                 gradeOptions: [
                     {
-                        label: '高一年级',
-                        value: '高一年级'
+                        label: '高一',
+                        value: '高一'
                     },{
-                        label: '高二年级',
-                        value: '高二年级'
+                        label: '高二',
+                        value: '高二'
                     },{
-                        label: '高三年级',
-                        value: '高三年级'
+                        label: '高三',
+                        value: '高三'
                     }
                 ],
-                classNameOptions: [
+                teachersFormClassOptions: [
                     {
                         label: '高一（1）班',
                         value: '高一（1）班'
@@ -189,33 +195,15 @@
                         value: '高一（3）班'
                     }
                 ],
-                courseTypeOptions: [
-                    {
-                        label: '实践课',
-                        value: '实践课'
-                    },{
-                        label: '理论+实践课',
-                        value: '理论+实践课'
-                    },{
-                        label: '理论课',
-                        value: '理论课'
-                    }
-                ],
-                tableForm: {
-                    grade: '',
-                    className: '',
-                    courseType: '',
-                    courseName: ''
-                },
                 result: {
                     data: [
                         {
-                          curriculumName: '1111',
-                          curriculumNo: '111',
-                          courseType: '11',
-                          totalClassHours: '1',
-                          grade: '1111',
-                          className: '11'
+                            teacherName: '1111',
+                            teacherGender: '1241',
+                            teacherAge: '1421',
+                            teachingCourses: '1255',
+                            education: '1111',
+                            technicalTitle: '5122'
                         }
                     ],
                     total:  1000
@@ -229,11 +217,11 @@
         },
         methods: {
             init() {
-                this.getCoursesNumCharts();
-                this.getCurriculumChangeCharts();
+                this.getTeachersChart();
+                this.getTeachersChangeChart();
                 this.getTableData();
             },
-            coursesNumSubmit() {
+            handleClick(row) {
 
             },
             handleSizeChange(val) {
@@ -247,19 +235,14 @@
             getTableData() {
 
             },
-            onSubmit() {
+            tableSubmit() {
 
             },
-            handleClick(row) {
-                this.$router.push({
-                    path: '/detailsHome/disciplineAnalysis/disciplineOverview/detail',
-                })
-            },
-            getCurriculumChangeCharts() {
-                let myChart = this.$echarts.init(document.getElementById('curriculumChangeCharts'))
+            getTeachersChangeChart() {
+                let myChart = this.$echarts.init(document.getElementById('teachersChangeChart'))
                 myChart.setOption({
                     title: {
-                        text: '课程近6学期变化趋势',
+                        text: '教师重要职称分类历年变化趋势',
                     },
                     grid: {
                         right: 20,
@@ -269,15 +252,16 @@
                         containLabel: true
                     },
                     legend: {
-                        data: ['实践课', '理论+实践课', '理论课'],
+                        data: ['校内专任教师', '校内兼课教师', '校外兼课教师', '校外兼职教师'],
                         textStyle: {
                             color: '#323232'
-                        }
+                        },
+                        right: 10
                     },
                     xAxis: {
                         type: 'category',
                         // boundaryGap: false,
-                        data: ['2018-2019第一学期', '2018-2019第二学期', '2019-2020第一学期', '2019-2020第二学期', '2020-2021第一学期', '2020-2021第二学期'],
+                        data: ['2016-2017', '2017-2018', '2018-2019', '2019-2020', '2020-2021'],
                         axisLabel: {
                             color: '#323232'
                         }
@@ -295,31 +279,50 @@
                     },
                     series: [
                         {
-                            name: '实践课',
-                            type: 'line',
-                            stack: '总量',
-                            data: [120, 132, 101, 134, 90, 230, 210]
-                        },
-                        {
-                            name: '理论+实践课',
-                            type: 'line',
-                            stack: '总量',
-                            data: [220, 182, 191, 234, 290, 330, 310]
-                        },
-                        {
-                            name: '理论课',
-                            type: 'line',
-                            stack: '总量',
-                            data: [150, 232, 201, 154, 190, 330, 410]
+                            name: '校内专任教师',
+                            type: 'bar',
+                            stack: 'total',
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            barWidth: 30,
+                            data: [320, 302, 301, 320, 302]
+                        },{
+                            name: '校内兼课教师',
+                            type: 'bar',
+                            stack: 'total',
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            barWidth: 30,
+                            data: [123, 214, 145, 123, 214]
+                        },{
+                            name: '校外兼课教师',
+                            type: 'bar',
+                            stack: 'total',
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            barWidth: 30,
+                            data: [252, 125, 23, 425, 234]
+                        },{
+                            name: '校外兼职教师',
+                            type: 'bar',
+                            stack: 'total',
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            barWidth: 30,
+                            data: [132, 111, 99, 213, 126]
                         }
                     ]
                 })
             },
-            getCoursesNumCharts() {
-                let myChart = this.$echarts.init(document.getElementById('coursesNumCharts'))
+            getTeachersChart() {
+                let myChart = this.$echarts.init(document.getElementById('teachersChart'))
                 myChart.setOption({
                     title: {
-                        text: '课程数量及占比',
+                        text: '教师重要职称分类数量',
                     },
                     tooltip: {
                         trigger: 'item',
@@ -329,24 +332,43 @@
                         type: 'scroll',
                         orient: 'vertical',
                         top: 'center',
-                        right: 80,
+                        right: 100,
                         textStyle: {
                             color: '#323232',
                             fontSize: 12
                         },
+                        formatter(params) {
+                            switch (params) {
+                                case "校内专任教师":
+                                    return params + "   " + 134;
+                                    break;
+                                case "校内兼课教师":
+                                    return params + "   " + 421;
+                                    break;
+                                case "校外兼课教师":
+                                    return params + "   " + 213;
+                                    break;
+                                case "校外兼职教师":
+                                    return params + "   " + 123;
+                                    break;
+                                default:
+                                    return "";
+                            }
+                        }
                     },
                     series: [
                         {
-                            name: '课程数量及占比',
+                            name: '教师重要职称分类数量',
                             type: 'pie',
                             top: 10,
-                            right: 100,
-                            radius: ['50%', '70%'],
+                            right: 200,
+                            radius: ['40%', '60%'],
                             avoidLabelOverlap: false,
                             data: [
-                                {value: 64, name: '理论课',itemStyle: {color: '#13acb5'}},
-                                {value: 123, name: '理论+实践课',itemStyle: {color: '#60a8ff'}},
-                                {value: 12, name: '实践课',itemStyle: {color: '#e8d83b'}}
+                                {value: 134, name: '校内专任教师',itemStyle: {color: '#13acb5'}},
+                                {value: 421, name: '校内兼课教师',itemStyle: {color: '#60a8ff'}},
+                                {value: 213, name: '校外兼课教师',itemStyle: {color: '#e8d83b'}},
+                                {value: 123, name: '校外兼职教师',itemStyle: {color: '#e66b42'}}
                             ],
                             emphasis: {
                                 itemStyle: {
@@ -358,12 +380,18 @@
                         }
                     ]
                 })
+            },
+            teachersSubmit() {
+
             }
         }
     }
 </script>
 
 <style scoped>
+    .school-overview-card{
+        margin-bottom: 30px;
+    }
     .grade-num-box{
         width: 100%;
         height: 400px;
@@ -371,12 +399,12 @@
         align-items: center;
         justify-content: space-between;
     }
-    .school-overview-card{
-        margin-bottom: 30px;
+    #teachersChart{
+        width: 42%;
+        height: 100%;
     }
-    #coursesNumCharts,
-    #curriculumChangeCharts{
-        width: 49%;
+    #teachersChangeChart{
+        width: 56%;
         height: 100%;
     }
 </style>

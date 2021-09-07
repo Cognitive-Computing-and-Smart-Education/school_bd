@@ -1,6 +1,7 @@
 export default {
     state: {
-        path: ''
+        path: '',
+        oldRouter: {}
     },
     getters: {
         routerPath(state) {
@@ -10,6 +11,9 @@ export default {
     mutations: {
         changeRouterPath(state, payload) {
             state.path = payload;
+        },
+        changeOldRouterPath(state,payload) {
+            state.oldRouter = payload;
         }
     },
     actions: {

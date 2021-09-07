@@ -1,5 +1,6 @@
 import gradeAnalysis from './gradeAnalysis'
 import disciplineAnalysis from './disciplineAnalysis'
+import teacherAnalysis from './teacherAnalysis'
 
 
 const memberManage = [
@@ -28,6 +29,12 @@ const memberManage = [
         children: disciplineAnalysis,
         component: () => import('@/views/discipline-analysis/index'),
         meta: {title: '学科分析',type:'menu',icon:'el-icon-location'}
+    },{
+        path: 'teacherAnalysis',
+        name: 'teacherAnalysis',
+        children: teacherAnalysis,
+        component: () => import('@/views/teacher-analysis/index'),
+        meta: {title: '教师分析',type:'menu',icon:'el-icon-location'}
     },
 ]
 

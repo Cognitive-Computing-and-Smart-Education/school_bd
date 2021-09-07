@@ -3,7 +3,13 @@ const gradeAnalysis = [
         path: 'disciplineOverview',
         name: 'disciplineOverview',
         component: () => import('@/views/discipline-analysis/discipline-overview/index'),
-        meta: {title: '学科概况',type:'menu'}
+        meta: {title: '学科概况',type:'menu'},
+    },
+    {
+        path: 'disciplineOverview/detail',
+        name: 'disciplineOverviewDetail',
+        component: () => import('@/views/discipline-analysis/discipline-overview/detail'),
+        meta: {title: '课程详情',type:'detail'}
     },
     {
         path: 'curriculumResources',

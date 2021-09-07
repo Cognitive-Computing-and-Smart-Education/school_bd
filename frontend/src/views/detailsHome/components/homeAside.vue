@@ -34,6 +34,7 @@
                     <el-menu-item width="200px"
                                   style="padding-left: 30px;padding-right:0px;margin-left: 0px;text-align: left"
                                   v-for="child in item.children"
+                                  v-if="child.meta.type === 'menu'"
                                   :index="child.path"
                                   :route="{path:child.path,name:child.name}"
                                   :key="child.path">{{child.meta.title}}
@@ -69,16 +70,19 @@
         props: ['isCollapse'],
         created() {
             this.routerList = homeManage
-            console.log(this.routerList)
+            if(!this.activeAside && window.localStorage.getItem('activeAside')) {
+                this.activeAside = window.localStorage.getItem('activeAside')
+            }
         },
         computed: {
-            ...mapGetters(["routerPath"]),
+            ...mapGetters(["routerPath",'changeOldRouterPath']),
         },
         watch: {
             routerPath() {
                 // this.getNowTime();
                 // console.log(this.routerPath)
                 this.activeAside = this.routerPath
+                window.localStorage.setItem('activeAside', this.activeAside)
             }
         },
         methods: {

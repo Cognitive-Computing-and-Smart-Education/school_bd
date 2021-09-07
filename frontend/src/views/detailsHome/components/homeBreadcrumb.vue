@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/' }" v-for="(item,index) in breadList" :key="item.path">{{ item.meta.title }}</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: item.path }" v-for="(item,index) in breadList" :key="item.path">{{ item.meta.title }}</el-breadcrumb-item>
         </el-breadcrumb>
     </div>
 </template>
@@ -26,6 +26,7 @@
             getBreadcrumb() {
                 let _that = this
                 let matched = _that.$route.matched;
+                console.log('matched',_that.$route)
                 if(!this.isHome(matched[0])) {
                     for(let i in matched) {
                         if(matched[i].name == 'detailsHome') {
@@ -33,16 +34,22 @@
                             i = i - 1
                         }
                     }
-                    matched = [{path: '/', meta: {title: '首页'}}].concat(matched)
+                    if(matched[matched.length - 1].meta.type !== 'menu' && _that.breadList.length > 0) {
+                        matched = _that.breadList.concat(matched)
+                    }else {
+                        matched = [{path: '/', meta: {title: '首页'}}].concat(matched)
+                    }
                 }
                 _that.breadList = matched
                 for(let i in _that.breadList) {
-                    if(_that.breadList[i].name == 'gradeAnalysis') {
+                    if(_that.breadList[i].name == 'gradeAnalysis' || _that.breadList[i].name == 'disciplineAnalysis' || _that.breadList[i].name == 'teacherAnalysis') {
                         _that.breadList.splice(i,1)
                         i = i - 1
                     }
                 }
-                console.log('breadList',_that.breadList)
+
+                // window.localStorage.setItem('breadList', )
+                // console.log('breadList',_that.breadList)
             }
         },
         mounted() {

@@ -44,7 +44,7 @@
                     this.isRouterAlive = true
                 })
             }
-        }
+        },
     }
 </script>
 

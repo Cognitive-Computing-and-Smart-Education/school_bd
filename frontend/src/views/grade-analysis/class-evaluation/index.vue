@@ -137,6 +137,9 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="achievementSubmit">查询</el-button>
+                    </el-form-item>
                 </el-form>
                 <div class="achievement-box">
                     <div id="achievementCharts"></div>
@@ -246,6 +249,9 @@
                         return false;
                     }
                 });
+            },
+            achievementSubmit() {
+
             },
             init(className) {
                 this.getAchievementCharts(className);
