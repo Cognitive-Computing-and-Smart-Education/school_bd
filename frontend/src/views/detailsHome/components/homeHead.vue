@@ -46,7 +46,7 @@
         methods: {
             ceshi() {
                 let _that = this
-                console.log(_that.$route.matched)
+                // console.log(_that.$route.matched)
             }
         }
     }

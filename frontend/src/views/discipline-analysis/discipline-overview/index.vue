@@ -252,7 +252,7 @@
             },
             handleClick(row) {
                 this.$router.push({
-                    path: '/detailsHome/disciplineAnalysis/disciplineOverview/detail',
+                    path: '/detailsHome/disciplineAnalysis/disciplineOverview/disciplineOverviewDetail',
                 })
             },
             getCurriculumChangeCharts() {
