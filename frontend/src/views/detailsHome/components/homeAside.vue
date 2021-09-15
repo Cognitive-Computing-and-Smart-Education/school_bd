@@ -20,7 +20,7 @@
                               :route="{path:'/',name:'home'}"
                               :key="'/'">
                     <template slot="title">
-                        <i class="el-icon-location" style="color: #fff;width: 14px;margin-right: 8px"></i>
+                        <i class="el-icon-help" style="color: #fff;width: 14px;margin-right: 12px"></i>
                         <span slot="title">首页</span>
                     </template>
                 </el-menu-item>
@@ -28,7 +28,7 @@
             <template v-for="(item,index) in routerList">
                 <el-submenu :key="index" :index="index+''" v-if="item.children">
                     <template slot="title">
-                        <i :class="item.meta.icon" style="color: #fff;width: 14px;margin-right: 8px"></i>
+                        <i :class="item.meta.icon" style="color: #fff;width: 14px;margin-right: 12px"></i>
                         <span slot="title">{{item.meta.title}}</span>
                     </template>
                     <el-menu-item width="200px"
@@ -46,7 +46,7 @@
                               :route="{path:item.path,name:item.name}"
                               :key="item.path">
                     <template slot="title">
-                        <i :class="item.meta.icon" style="color: #fff;width: 14px;margin-right: 8px"></i>
+                        <i :class="item.meta.icon" style="color: #fff;width: 14px;margin-right: 12px"></i>
                         <span slot="title">{{item.meta.title}}</span>
                     </template>
                 </el-menu-item>
