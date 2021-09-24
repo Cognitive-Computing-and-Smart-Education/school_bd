@@ -2,8 +2,9 @@
     <div class="container">
         <div class="head-left">
             <el-tooltip content="收起菜单" placement="bottom" style="margin-right: 10px">
-                <div class="header-collapse finger" @click="ceshi">
-                    <i class="el-icon-s-fold"></i>
+                <div class="header-collapse finger" @click="collapseChange">
+                    <i class="el-icon-s-fold" v-if="!collapseType"></i>
+                    <i class="el-icon-s-unfold" v-else></i>
                 </div>
             </el-tooltip>
             <div class="head-breadcrumb">
@@ -17,13 +18,13 @@
                         :src="userImg"
                         fit="cover"></el-image>
             </div>
-            <el-dropdown trigger="click">
+            <el-dropdown trigger="click" :tabindex="99999" :popper-append-to-body= 'false'>
                <span class="el-dropdown-link finger">
                  您好，欢迎登录学校大数据教育平台<i class="el-icon-arrow-down el-icon--right"></i>
                </span>
-                <el-dropdown-menu slot="dropdown">
+                <el-dropdown-menu slot="dropdown" class="user-message-dropdown">
                     <el-dropdown-item>用户设置</el-dropdown-item>
-                    <el-dropdown-item>安全退出</el-dropdown-item>
+                    <el-dropdown-item @click="goLogin">安全退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -32,26 +33,45 @@
 
 <script>
     import homeBreadcrumb from './homeBreadcrumb'
+    import { mapGetters, mapMutations } from "vuex";
 
     export default {
         name: "homeHead",
         data() {
             return {
-                userImg: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+                userImg: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+                collapseType: false
             }
         },
         components: {
             homeBreadcrumb
         },
         methods: {
-            ceshi() {
+            ...mapMutations(["changeCollapseTypeName"]),
+            goLogin() {
+                this.$router.push({
+                    path: '/login',
+                })
+            },
+            collapseChange() {
                 let _that = this
+                if(_that.collapseType) {
+                    _that.collapseType = false
+                }else {
+                    _that.collapseType = true
+                }
+                _that.changeCollapseTypeName(_that.collapseType);
                 // console.log(_that.$route.matched)
             }
         }
     }
 </script>
 
+<style>
+    .user-message-dropdown{
+        z-index: 99999 !important;
+    }
+</style>
 <style scoped>
     .container{
         width: 100%;

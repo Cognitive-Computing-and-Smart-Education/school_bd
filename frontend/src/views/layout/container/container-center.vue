@@ -5,7 +5,7 @@
         </div>
         <div class="industry-voice-box">
             <div class="courseOverview">
-                <div class="current-title finger" @click="goDetail">
+                <div class="current-title finger" @click="goDetail('/detailsHome/disciplineAnalysis/disciplineOverview', 'disciplineOverview')">
                     课程概况
                 </div>
                 <div class="current-content">
@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="studentProfile">
-                <div class="current-title">
+                <div class="current-title finger" @click="goDetail('/detailsHome/studentAnalysis/studentInformation', 'studentInformation')">
                     学生概况
                 </div>
                 <div class="current-content">
@@ -154,9 +154,10 @@
             init() {
 
             },
-            goDetail() {
+            goDetail(path,name) {
+                window.localStorage.setItem('activeAside', name)
                 this.$router.push({
-                    path: '/detailsHome/schoolProfile',
+                    path: path,
                 })
             }
         }

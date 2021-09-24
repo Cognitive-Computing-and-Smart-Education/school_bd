@@ -32,6 +32,7 @@
             };
         },
         created () {
+            window.localStorage.clear()
             this.getNowTime()
         },
         methods: {

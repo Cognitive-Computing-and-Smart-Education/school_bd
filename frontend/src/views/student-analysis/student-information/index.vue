@@ -30,7 +30,7 @@
                 </div>
             </div>
         </el-card>
-        <div class="current-half-box marginTop20">
+        <div class="school-overview-card current-half-box marginTop20">
             <el-card class="current-card-box" shadow="always">
                 <div slot="header" class="clearfix current-card-head">
                     <span>经济困难学生</span>
@@ -86,9 +86,9 @@
                 </div>
             </el-card>
         </div>
-        <el-card class="school-overview-card current-card-box" shadow="always">
+        <el-card class="current-card-box" shadow="always">
             <div slot="header" class="clearfix current-card-head">
-                <span>教师基本信息表</span>
+                <span>学生基本信息表</span>
             </div>
             <div class="">
                 <el-form :inline="true" :model="tableForm" class="demo-form-inline">

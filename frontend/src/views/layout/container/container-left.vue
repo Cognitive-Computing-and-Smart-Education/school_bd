@@ -1,7 +1,7 @@
 <template>
     <div class="container-right-box">
         <div class="public-sentiment-box">
-            <div class="current-title">
+            <div class="current-title finger" @click="goDetail('/detailsHome/schoolProfile', 'schoolProfile')">
                 办学规模
             </div>
             <div class="current-content" style="display: flex">
@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="information-sources-box">
-            <div class="current-title">
+            <div class="current-title finger" @click="goDetail('/detailsHome/teacherAnalysis/teacherProfile', 'teacherProfile')">
                 师资概况
             </div>
             <div class="current-content">
@@ -97,7 +97,7 @@
             </div>
         </div>
         <div class="media-impression">
-            <div class="current-title">
+            <div class="current-title finger" @click="goDetail('/detailsHome/studentsSource', 'studentsSource')">
                 本期招生数据
             </div>
             <div class="current-content">
@@ -141,6 +141,12 @@
             init(Area_name) {
                 this.getEnrollmentDataChart(Area_name || '')
                 this.getTeacherProfileChart(Area_name || '')
+            },
+            goDetail(path,name) {
+                window.localStorage.setItem('activeAside', name)
+                this.$router.push({
+                    path: path,
+                })
             },
             getTeacherProfileChart() {
                 let myChart = this.$echarts.init(document.getElementById('teacherProfileChart'))

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import home from './modules/home'
 import routerData from './modules/routerData'
 import classData from './modules/classData'
+import collapseType from './modules/collapseType'
 
 
 
@@ -22,7 +23,8 @@ export default new Vuex.Store({
     modules: {
         home,
         routerData,
-        classData
+        classData,
+        collapseType
     },
     actions: {
 

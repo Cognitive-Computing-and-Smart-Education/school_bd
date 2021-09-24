@@ -1,7 +1,7 @@
 <template>
     <div class="container-right-box">
         <div class="public-sentiment-box">
-            <div class="current-title">
+            <div class="current-title finger" @click="goDetail('/detailsHome/graduationAnalysis', 'graduationAnalysis')">
                 升学情况
             </div>
             <div class="current-content">
@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="information-sources-box">
-            <div class="current-title">
+            <div class="current-title finger" @click="goDetail('/detailsHome/studentAnalysis/studentQuality', 'studentQuality')">
                 学生获奖（学年）
             </div>
             <div class="current-content">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="media-impression">
-            <div class="current-title">
+            <div class="current-title finger" @click="goDetail('/detailsHome/socialEvaluation', 'socialEvaluation')">
                 学校社会影响分析
             </div>
             <div class="current-content">
@@ -57,6 +57,12 @@
                 this.getEnrollmentChart(Area_name || '')
                 this.getAwardChart(Area_name || '')
                 this.getInfluenceChart(Area_name || '')
+            },
+            goDetail(path,name) {
+                window.localStorage.setItem('activeAside', name)
+                this.$router.push({
+                    path: path,
+                })
             },
             getInfluenceChart() {
                 let myChart = this.$echarts.init(document.getElementById('influenceChart'))

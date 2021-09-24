@@ -1,6 +1,6 @@
 <template>
     <el-col class="aside-scroll">
-        <div class="aside-logo"><img src="../../../assets/img/logo4.png"></div>
+        <div class="aside-logo" v-if="!isCollapse"><img src="../../../assets/img/logo4.png"></div>
         <el-menu
                 :unique-opened="true"
                 :router="true"
@@ -19,10 +19,8 @@
                               :index="'/'"
                               :route="{path:'/',name:'home'}"
                               :key="'/'">
-                    <template slot="title">
-                        <i class="el-icon-help" style="color: #fff;width: 14px;margin-right: 12px"></i>
-                        <span slot="title">首页</span>
-                    </template>
+                    <i class="el-icon-help" style="color: #fff;width: 14px;margin-right: 12px"></i>
+                    <span slot="title">首页</span>
                 </el-menu-item>
             </template>
             <template v-for="(item,index) in routerList">
@@ -40,15 +38,13 @@
                                   :key="child.path">{{child.meta.title}}
                     </el-menu-item>
                 </el-submenu>
-                <el-menu-item width="200px" v-else
+                <el-menu-item v-else
                               style="padding-left: 30px;padding-right:0px;margin-left: 0px;text-align: left"
                               :index="item.path"
                               :route="{path:item.path,name:item.name}"
                               :key="item.path">
-                    <template slot="title">
-                        <i :class="item.meta.icon" style="color: #fff;width: 14px;margin-right: 12px"></i>
-                        <span slot="title">{{item.meta.title}}</span>
-                    </template>
+                    <i :class="item.meta.icon" style="color: #fff;width: 14px;margin-right: 12px"></i>
+                    <span slot="title">{{item.meta.title}}</span>
                 </el-menu-item>
             </template>
         </el-menu>
@@ -64,10 +60,10 @@
         data() {
             return {
                 routerList: [],
-                activeAside: ''
+                activeAside: '',
+                isCollapse: false
             }
         },
-        props: ['isCollapse'],
         created() {
             this.routerList = homeManage
             if(!this.activeAside && window.localStorage.getItem('activeAside')) {
@@ -75,7 +71,7 @@
             }
         },
         computed: {
-            ...mapGetters(["routerPath",'changeOldRouterPath']),
+            ...mapGetters(["routerPath",'collapseTypeName']),
         },
         watch: {
             routerPath() {
@@ -83,6 +79,9 @@
                 // console.log(this.routerPath)
                 this.activeAside = this.routerPath
                 window.localStorage.setItem('activeAside', this.activeAside)
+            },
+            collapseTypeName() {
+                this.isCollapse = this.collapseTypeName
             }
         },
         methods: {
@@ -107,6 +106,10 @@
     /deep/ .el-submenu .el-menu-item{
         padding-left: 50px !important;
     }
+    /deep/ .el-menu-vertical-demo:not(.el-menu--collapse) {
+        width: 200px;
+        transition: all .3s;
+    }
     .aside-logo{
         width: 100%;
         border-bottom: 1px solid #5c646b;
@@ -117,21 +120,21 @@
         display: inline-block;
     }
     .aside-scroll{
-        width: 200px;
+        max-width: 200px;
         height: 100%;
         overflow-x: hidden;
         background-color: #545c64;
         /*background: url('~@/assets/images/aside_bg.png') no-repeat 0 320px;*/
         /*background-size: 100%;*/
     }
+    .aside-tree-sm{
+        width: 65px;
+    }
     .aside-tree{
-        width: 200px;
+        max-width: 200px;
         background: transparent;
         transition: all .3s;
         border-right: none;
-    }
-    .aside-tree-sm{
-        width: 65px;
     }
     /*.el-menu-item:hover{*/
     /*    background-color: #009688 !important;*/
